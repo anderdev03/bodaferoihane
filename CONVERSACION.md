@@ -1,9 +1,9 @@
 # Conversación: Web Boda Oihane & Fer
 
 ## Estado actual
-**Fase 2 completada** (Google Apps Script + Sheet — pendiente de que el usuario despliegue)
-**Siguiente:** Fase 3 (Componentes estáticos)
-**Última sesión:** 14 junio 2026
+**Fases 1-6 completadas** (todo el frontend y backend funcional)
+**Siguiente:** Fase 7 (responsive, animaciones, pulido)
+**Última sesión:** 26 junio 2026
 
 ---
 
