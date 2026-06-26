@@ -9,7 +9,7 @@ const itinerary = [
 
 <section id="itinerario" class="bg-white px-4 py-24 sm:py-32">
     <div class="mx-auto max-w-5xl">
-        <div class="mb-16 text-center">
+        <div class="mb-16 text-center" data-animate>
             <p class="font-serif text-sm uppercase tracking-[0.3em] text-muted">Itinerario</p>
             <h2 class="mt-3 font-serif text-3xl font-normal sm:text-4xl">El día</h2>
         </div>
@@ -24,7 +24,7 @@ const itinerary = [
                     <circle cx="250" cy="300" r="3" fill="#2d2d2d"/>
                 </svg>
             </div>
-            <div class="relative z-10 mx-auto max-w-2xl">
+            <div class="relative z-10 mx-auto max-w-2xl" data-animate-stagger>
                 {itinerary.map((item, i) => (
                     <div class="flex items-start gap-6 pb-12 last:pb-0">
                         <div class="flex flex-col items-center">

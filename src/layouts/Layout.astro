@@ -19,5 +19,41 @@ import '../styles/global.css'
     </head>
     <body>
         <slot />
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('in-view')
+                                observer.unobserve(entry.target)
+                            }
+                        })
+                    },
+                    { threshold: 0.15, rootMargin: '0px 0px -50px 0px' }
+                )
+
+                document.querySelectorAll('[data-animate]').forEach((el) => observer.observe(el))
+
+                document.querySelectorAll('[data-animate-stagger]').forEach((parent) => {
+                    const children = parent.children
+                    if (children.length) {
+                        const parentObserver = new IntersectionObserver(
+                            ([entry]) => {
+                                if (entry.isIntersecting) {
+                                    Array.from(children).forEach((child, i) => {
+                                        child.style.transitionDelay = `${i * 120}ms`
+                                        child.classList.add('in-view')
+                                    })
+                                    parentObserver.unobserve(parent)
+                                }
+                            },
+                            { threshold: 0.15 }
+                        )
+                        parentObserver.observe(parent)
+                    }
+                })
+            })
+        </script>
     </body>
 </html>

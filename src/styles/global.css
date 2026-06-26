@@ -9,6 +9,8 @@
     --color-muted: #6b6b6b;
     --font-serif: "Playfair Display", serif;
     --font-sans: "Inter", sans-serif;
+    --animate-fade-up: fade-up 0.8s ease-out forwards;
+    --animate-fade-in: fade-in 0.6s ease-out forwards;
 }
 
 html {
@@ -17,4 +19,92 @@ html {
 
 body {
     @apply bg-cream text-dark font-sans antialiased;
+}
+
+[data-animate] {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+[data-animate].in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+[data-animate='fade'] {
+    transform: none;
+}
+
+[data-animate-stagger] > * {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+[data-animate-stagger] > *.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.btn-accent {
+    @apply rounded-lg bg-accent px-6 py-3 text-sm text-white transition-all duration-300 ease-out;
+}
+
+.btn-accent:hover {
+    @apply bg-accent/90 scale-[1.02];
+}
+
+.btn-accent:active {
+    @apply scale-[0.98];
+}
+
+/* Section decorative divider */
+.section-divider {
+    @apply mx-auto h-px w-20 bg-accent;
+}
+
+/* Card hover */
+.card-hover {
+    @apply transition-all duration-300 ease-out;
+}
+
+.card-hover:hover {
+    @apply -translate-y-0.5 shadow-lg;
+}
+
+/* Input focus */
+input[type='text']:focus,
+input[type='password']:focus {
+    @apply ring-2 ring-accent/30 border-accent;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-accent-light);
+    border-radius: 3px;
 }
