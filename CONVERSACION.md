@@ -1,8 +1,8 @@
 # Conversación: Web Boda Oihane & Fer
 
 ## Estado actual
-**Fase 1 completada** (Setup: Astro + Tailwind + git + GitHub)
-**Siguiente:** Fase 2 (Google Apps Script + Sheet)
+**Fase 2 completada** (Google Apps Script + Sheet — pendiente de que el usuario despliegue)
+**Siguiente:** Fase 3 (Componentes estáticos)
 **Última sesión:** 14 junio 2026
 
 ---
