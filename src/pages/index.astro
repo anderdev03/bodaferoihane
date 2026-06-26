@@ -1,11 +1,29 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from '../layouts/Layout.astro'
+import Hero from '../components/Hero.astro'
+import Location from '../components/Location.astro'
+import Itinerary from '../components/Itinerary.astro'
+import BusSection from '../components/BusSection.astro'
+import MusicSection from '../components/MusicSection.astro'
+import RsvpForm from '../components/RsvpForm.astro'
+import Footer from '../components/Footer.astro'
 ---
 
 <Layout>
-	<Welcome />
+    <Hero title="Oihane &amp; Fer" subtitle="Nos casamos" date="10 de octubre de 2026" targetDate="2026-10-10" />
+    <Location name="Finca El Encinal" address="Carretera de Aranguren, 10 · 31192 Noáin" />
+    <Itinerary />
+    <BusSection />
+    <MusicSection />
+    <section id="rsvp" class="bg-warm px-4 py-24 sm:py-32">
+        <div class="mx-auto max-w-xl text-center">
+            <p class="font-serif text-sm uppercase tracking-[0.3em] text-muted">Confirmación</p>
+            <h2 class="mt-3 font-serif text-3xl font-normal sm:text-4xl">¿Vienes?</h2>
+            <p class="mt-4 text-muted">Confirma tu asistencia antes del 30 de septiembre</p>
+            <div class="mt-10">
+                <RsvpForm />
+            </div>
+        </div>
+    </section>
+    <Footer />
 </Layout>

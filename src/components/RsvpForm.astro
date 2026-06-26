@@ -1,0 +1,110 @@
+---
+const GAS_URL = import.meta.env.PUBLIC_GAS_URL
+---
+
+<form id="rsvp-form" class="mx-auto max-w-xl text-left" data-gas={GAS_URL}>
+    <div class="space-y-6">
+        <div>
+            <label class="mb-1 block text-sm text-muted">¿Asistirás?</label>
+            <div class="flex gap-4">
+                <label class="flex cursor-pointer items-center gap-2 rounded-lg border border-accent-light/40 px-5 py-3 text-sm transition has-checked:border-accent has-checked:bg-accent/5">
+                    <input type="radio" name="asiste" value="SI" required />
+                    Sí, asistiré
+                </label>
+                <label class="flex cursor-pointer items-center gap-2 rounded-lg border border-accent-light/40 px-5 py-3 text-sm transition has-checked:border-accent has-checked:bg-accent/5">
+                    <input type="radio" name="asiste" value="NO" required />
+                    No, lo siento
+                </label>
+            </div>
+        </div>
+
+        <div>
+            <label for="nombre" class="mb-1 block text-sm text-muted">Nombre y apellidos</label>
+            <input type="text" id="nombre" name="nombre" required
+                class="w-full rounded-lg border border-accent-light/40 bg-cream px-4 py-3 text-sm outline-none transition focus:border-accent" />
+        </div>
+
+        <div>
+            <label class="mb-1 block text-sm text-muted">Alergias / Intolerancias</label>
+            <div class="space-y-2">
+                {['Vegetariano', 'Vegano', 'Celíaco'].map((opt) => (
+                    <label class="flex cursor-pointer items-center gap-2 text-sm">
+                        <input type="checkbox" name="alergias" value={opt} class="accent-accent" />
+                        {opt}
+                    </label>
+                ))}
+            </div>
+        </div>
+
+        <div>
+            <label for="otros" class="mb-1 block text-sm text-muted">Otras alergias o intolerancias</label>
+            <input type="text" id="otros" name="otros_texto"
+                class="w-full rounded-lg border border-accent-light/40 bg-cream px-4 py-3 text-sm outline-none transition focus:border-accent" />
+        </div>
+
+        <div>
+            <label class="mb-1 block text-sm text-muted">¿Coges el autobús?</label>
+            <div class="flex gap-4">
+                <label class="flex cursor-pointer items-center gap-2 rounded-lg border border-accent-light/40 px-5 py-3 text-sm transition has-checked:border-accent has-checked:bg-accent/5">
+                    <input type="radio" name="bus" value="SI" required />
+                    Sí
+                </label>
+                <label class="flex cursor-pointer items-center gap-2 rounded-lg border border-accent-light/40 px-5 py-3 text-sm transition has-checked:border-accent has-checked:bg-accent/5">
+                    <input type="radio" name="bus" value="NO" required />
+                    No, voy por mi cuenta
+                </label>
+            </div>
+        </div>
+
+        <div>
+            <label for="cancion" class="mb-1 block text-sm text-muted">Tu canción favorita (opcional)</label>
+            <input type="text" id="cancion" name="cancion" placeholder="Artista — Canción"
+                class="w-full rounded-lg border border-accent-light/40 bg-cream px-4 py-3 text-sm outline-none transition focus:border-accent" />
+        </div>
+
+        <button type="submit"
+            class="w-full rounded-lg bg-accent py-3 text-sm text-white transition hover:bg-accent/90">
+            Confirmar asistencia
+        </button>
+    </div>
+</form>
+
+<script>
+    (function () {
+        const form = document.getElementById('rsvp-form')
+        if (!form) return
+        const gasUrl = form.dataset.gas
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault()
+            const fd = new FormData(form)
+            const alergias = fd.getAll('alergias')
+            const payload = {
+                nombre: fd.get('nombre'),
+                asiste: fd.get('asiste'),
+                alergias,
+                otros_texto: fd.get('otros_texto'),
+                bus: fd.get('bus'),
+                cancion: fd.get('cancion'),
+            }
+
+            const btn = form.querySelector('button[type="submit"]')
+            btn.disabled = true
+            btn.textContent = 'Enviando...'
+
+            try {
+                await fetch(gasUrl, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify(payload),
+                })
+                form.innerHTML =
+                    '<div class="text-center py-12"><p class="font-serif text-2xl text-accent">¡Gracias por confirmar!</p><p class="mt-2 text-sm text-muted">Te esperamos ❤️</p></div>'
+            } catch {
+                btn.disabled = false
+                btn.textContent = 'Error — inténtalo de nuevo'
+            }
+        })
+    })()
+</script>

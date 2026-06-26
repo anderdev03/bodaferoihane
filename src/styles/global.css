@@ -1,1 +1,20 @@
 @import "tailwindcss";
+
+@theme {
+    --color-cream: #faf6f0;
+    --color-warm: #f5efe6;
+    --color-accent: #c4a882;
+    --color-accent-light: #dccfc0;
+    --color-dark: #2d2d2d;
+    --color-muted: #6b6b6b;
+    --font-serif: "Playfair Display", serif;
+    --font-sans: "Inter", sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    @apply bg-cream text-dark font-sans antialiased;
+}

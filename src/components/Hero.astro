@@ -1,0 +1,19 @@
+---
+import Countdown from './Countdown.astro'
+
+const { title, subtitle, date, targetDate } = Astro.props
+---
+
+<section class="relative flex min-h-dvh items-center justify-center overflow-hidden px-4 text-center">
+    <div class="absolute inset-0 bg-gradient-to-b from-cream via-warm to-cream/50"></div>
+    <div class="relative z-10 max-w-2xl">
+        <p class="font-serif text-sm uppercase tracking-[0.3em] text-muted">Invitación</p>
+        <h1 class="mt-6 font-serif text-5xl font-normal leading-tight tracking-wide sm:text-7xl">
+            {title}
+        </h1>
+        <div class="mx-auto my-8 h-px w-20 bg-accent"></div>
+        <p class="font-serif text-2xl italic text-accent sm:text-3xl">{subtitle}</p>
+        <p class="mt-6 text-lg font-light text-muted">{date}</p>
+        <Countdown targetDate={targetDate} />
+    </div>
+</section>

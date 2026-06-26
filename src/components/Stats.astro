@@ -1,0 +1,181 @@
+---
+const GAS_URL = import.meta.env.PUBLIC_GAS_URL
+---
+
+<div id="stats-root" data-gas={GAS_URL}>
+    <div id="stats-login" class="mx-auto max-w-sm">
+        <form id="login-form" class="space-y-4">
+            <div>
+                <label for="user" class="mb-1 block text-sm text-muted">Usuario</label>
+                <input type="text" id="user" value="admin_ander_2026" readonly
+                    class="w-full rounded-lg border border-accent-light/40 bg-cream/50 px-4 py-3 text-sm text-muted" />
+            </div>
+            <div>
+                <label for="pass" class="mb-1 block text-sm text-muted">Contraseña</label>
+                <input type="password" id="pass" required
+                    class="w-full rounded-lg border border-accent-light/40 bg-cream px-4 py-3 text-sm outline-none transition focus:border-accent" />
+            </div>
+            <button type="submit"
+                class="w-full rounded-lg bg-accent py-3 text-sm text-white transition hover:bg-accent/90">
+                Acceder
+            </button>
+            <p id="login-error" class="hidden text-sm text-red-500"></p>
+        </form>
+    </div>
+
+    <div id="stats-dashboard" class="hidden space-y-12">
+        <div class="grid gap-6 sm:grid-cols-4">
+            <div class="rounded-lg border border-accent-light/40 bg-white p-6 text-center">
+                <p id="stat-total" class="font-serif text-4xl text-accent">0</p>
+                <p class="mt-1 text-xs uppercase tracking-widest text-muted">Total respuestas</p>
+            </div>
+            <div class="rounded-lg border border-accent-light/40 bg-white p-6 text-center">
+                <p id="stat-si" class="font-serif text-4xl text-accent">0</p>
+                <p class="mt-1 text-xs uppercase tracking-widest text-muted">Asisten</p>
+            </div>
+            <div class="rounded-lg border border-accent-light/40 bg-white p-6 text-center">
+                <p id="stat-no" class="font-serif text-4xl text-accent">0</p>
+                <p class="mt-1 text-xs uppercase tracking-widest text-muted">No asisten</p>
+            </div>
+            <div class="rounded-lg border border-accent-light/40 bg-white p-6 text-center">
+                <p id="stat-bus" class="font-serif text-4xl text-accent">0</p>
+                <p class="mt-1 text-xs uppercase tracking-widest text-muted">Cogen bus</p>
+            </div>
+        </div>
+
+        <div>
+            <h3 class="font-serif text-xl mb-4">Alergias / Intolerancias</h3>
+            <div id="alergias-list" class="space-y-2"></div>
+        </div>
+
+        <div>
+            <h3 class="font-serif text-xl mb-4">Invitados</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                    <thead>
+                        <tr class="border-b border-accent-light/40 text-muted">
+                            <th class="pb-2 pr-4 font-medium">Nombre</th>
+                            <th class="pb-2 pr-4 font-medium">Asiste</th>
+                            <th class="pb-2 pr-4 font-medium">Alergias</th>
+                            <th class="pb-2 pr-4 font-medium">Bus</th>
+                            <th class="pb-2 font-medium">Canción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="invitados-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div>
+            <h3 class="font-serif text-xl mb-4">Canciones sugeridas</h3>
+            <div id="canciones-list" class="space-y-2"></div>
+        </div>
+
+        <button id="logout-btn" class="text-sm text-muted underline hover:text-dark">Cerrar sesión</button>
+    </div>
+</div>
+
+<script>
+    (function () {
+        const root = document.getElementById('stats-root')
+        const gasUrl = root.dataset.gas
+        const loginEl = document.getElementById('stats-login')
+        const dashEl = document.getElementById('stats-dashboard')
+        const loginForm = document.getElementById('login-form')
+        const passInput = document.getElementById('pass')
+        const errorEl = document.getElementById('login-error')
+
+        const ADMIN_PASS = 'aA9493-ander-03'
+
+        function showDashboard(data) {
+            loginEl.classList.add('hidden')
+            dashEl.classList.remove('hidden')
+
+            const s = data.stats
+            document.getElementById('stat-total').textContent = s.total
+            document.getElementById('stat-si').textContent = s.asisten
+            document.getElementById('stat-no').textContent = s.noAsisten
+            document.getElementById('stat-bus').textContent = s.bus
+
+            const aList = document.getElementById('alergias-list')
+            aList.innerHTML = ''
+            Object.entries(s.alergiasCount).forEach(([k, v]) => {
+                const d = document.createElement('div')
+                d.className = 'flex justify-between rounded-lg border border-accent-light/40 bg-white px-4 py-3 text-sm'
+                d.innerHTML = `<span>${k}</span><span class="font-medium">${v}</span>`
+                aList.appendChild(d)
+            })
+            if (Object.keys(s.alergiasCount).length === 0) {
+                aList.innerHTML = '<p class="text-sm text-muted">Sin datos</p>'
+            }
+
+            const tbody = document.getElementById('invitados-tbody')
+            tbody.innerHTML = ''
+            data.confirmaciones.forEach((r) => {
+                const tr = document.createElement('tr')
+                tr.className = 'border-b border-accent-light/20'
+                tr.innerHTML = `
+                    <td class="py-2 pr-4">${r.nombre || ''}</td>
+                    <td class="py-2 pr-4">${r.asiste || ''}</td>
+                    <td class="py-2 pr-4">${r.alergias || ''}</td>
+                    <td class="py-2 pr-4">${r.bus || ''}</td>
+                    <td class="py-2">${r.cancion || ''}</td>
+                `
+                tbody.appendChild(tr)
+            })
+
+            const cList = document.getElementById('canciones-list')
+            cList.innerHTML = ''
+            if (data.canciones.length === 0) {
+                cList.innerHTML = '<p class="text-sm text-muted">Sin sugerencias</p>'
+            } else {
+                data.canciones.forEach((c) => {
+                    const d = document.createElement('div')
+                    d.className = 'flex justify-between rounded-lg border border-accent-light/40 bg-white px-4 py-3 text-sm'
+                    d.innerHTML = `<span>${c.nombre || ''}</span><span class="text-muted">${c.artista_cancion || ''}</span>`
+                    cList.appendChild(d)
+                })
+            }
+        }
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault()
+            const pass = passInput.value
+            if (pass !== ADMIN_PASS) {
+                errorEl.textContent = 'Contraseña incorrecta'
+                errorEl.classList.remove('hidden')
+                return
+            }
+            errorEl.classList.add('hidden')
+
+            try {
+                const res = await fetch(`${gasUrl}?token=${encodeURIComponent(ADMIN_PASS)}`)
+                const json = await res.json()
+                if (json.success) {
+                    sessionStorage.setItem('admin_auth', 'true')
+                    showDashboard(json.data)
+                } else {
+                    errorEl.textContent = 'Error al cargar datos'
+                    errorEl.classList.remove('hidden')
+                }
+            } catch {
+                errorEl.textContent = 'Error de conexión'
+                errorEl.classList.remove('hidden')
+            }
+        })
+
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            sessionStorage.removeItem('admin_auth')
+            loginEl.classList.remove('hidden')
+            dashEl.classList.add('hidden')
+            passInput.value = ''
+        })
+
+        if (sessionStorage.getItem('admin_auth')) {
+            fetch(`${gasUrl}?token=${encodeURIComponent(ADMIN_PASS)}`)
+                .then((r) => r.json())
+                .then((j) => { if (j.success) showDashboard(j.data) })
+                .catch(() => {})
+        }
+    })()
+</script>
