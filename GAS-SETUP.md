@@ -3,19 +3,14 @@
 ## 1. Crear Google Sheet
 
 1. Ve a https://sheets.new
-2. Crea dos hojas (sheets) con estos nombres exactos:
+2. Crea una hoja (sheet) con este nombre exacto:
    - `Confirmaciones`
-   - `Canciones`
 
 ### Hoja "Confirmaciones" (columnas):
-| timestamp | nombre | asiste | alergias | otros_texto | bus | cancion |
-|-----------|--------|--------|----------|-------------|-----|---------|
+| timestamp | nombre | asiste | alergias | otros_texto | bus |
+|-----------|--------|--------|----------|-------------|-----|
 
-### Hoja "Canciones" (columnas):
-| timestamp | nombre | artista_cancion |
-|-----------|--------|-----------------|
-
-Puedes copiar esta fila en la primera fila de cada hoja.
+Puedes copiar esta fila en la primera fila de la hoja.
 
 ## 2. Crear Apps Script
 

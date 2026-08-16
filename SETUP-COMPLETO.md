@@ -11,7 +11,7 @@
 |----------|--------|--------|-------------------|
 | **GitHub** | Repositorio del código | `github.com/anderdev03/bodaferoihane` | Cuenta personal `anderdev03` |
 | **Vercel** | Alojamiento de la web (deploy) | `vercel.com` | Cuenta personal (importada desde GitHub) |
-| **Google Sheets** | Base de datos (confirmaciones, canciones) | `sheets.google.com` | Tu cuenta de Google personal |
+| **Google Sheets** | Base de datos (confirmaciones) | `sheets.google.com` | Tu cuenta de Google personal |
 | **Google Apps Script** | API que conecta la web con el Sheet | `script.google.com` | Tu cuenta de Google personal |
 | **Dominio** | `bodaferoihane.com` (pendiente de comprar) | — | — |
 
@@ -60,8 +60,7 @@ Esta es la URL del **Google Apps Script** (la "API" de la web).
 ### El Sheet (base de datos)
 - **Nombre**: Boda Oihane & Fer
 - **Hojas**:
-  - `Confirmaciones` → columnas: `timestamp | nombre | asiste | alergias | otros_texto | bus | cancion`
-  - `Canciones` → columnas: `timestamp | nombre | artista_cancion`
+  - `Confirmaciones` → columnas: `timestamp | nombre | asiste | alergias | otros_texto | bus`
 - **Acceso**: solo tu cuenta personal (NO es público)
 - El código fuente del script está en el repo: `gas-script.gs`
 
@@ -159,7 +158,7 @@ npm run dev
 
 - [ ] **Foto de portada** (Hero) — reemplazar placeholder en `src/components/Hero.astro`
 - [ ] **Foto del lugar** (Location) — reemplazar placeholder en `src/components/Location.astro`
-- [ ] **Playlist de Spotify** — poner el embed en `src/components/MusicSection.astro`
+- [ ] **Playlist de Spotify** — pendiente de decidir (por ahora no hay sección de música)
 - [ ] **Horarios definitivos del bus** — editar `src/components/BusSection.astro`
 - [ ] **Frase definitiva del footer** — editar `src/components/Footer.astro`
 - [ ] **Dominio** `bodaferoihane.com` — comprar y añadir en Vercel → Settings → Domains
@@ -177,7 +176,6 @@ npm run dev
 | Lugar + dirección | `src/pages/index.astro` |
 | Itinerario del día (horas/actos) | `src/components/Itinerary.astro` |
 | Paradas de bus + horas | `src/components/BusSection.astro` |
-| Playlist Spotify | `src/components/MusicSection.astro` |
 | Frase footer + límite confirmación | `src/components/Footer.astro` |
 | Formulario (campos) | `src/components/RsvpForm.astro` |
 | Panel novios (estadísticas) | `src/components/Stats.astro` |

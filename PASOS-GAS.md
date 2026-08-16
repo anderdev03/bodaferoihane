@@ -2,11 +2,9 @@
 
 ## 1. Crear el Google Sheet
 - Ve a https://sheets.new
-- Pon nombres a las hojas (pestañas de abajo):
+- Pon nombre a la hoja (pestaña de abajo):
   - **Hoja 1**: `Confirmaciones`
-  - **Hoja 2`: `Canciones`
-- En **Confirmaciones**, fila 1 pon: `timestamp`, `nombre`, `asiste`, `alergias`, `otros_texto`, `bus`, `cancion`
-- En **Canciones**, fila 1 pon: `timestamp`, `nombre`, `artista_cancion`
+- En **Confirmaciones**, fila 1 pon: `timestamp`, `nombre`, `asiste`, `alergias`, `otros_texto`, `bus`
 
 ## 2. Añadir el script
 1. En el Sheet: Extensiones → Apps Script

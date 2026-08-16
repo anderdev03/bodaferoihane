@@ -56,12 +56,6 @@ const GAS_URL = import.meta.env.PUBLIC_GAS_URL
             </div>
         </div>
 
-        <div>
-            <label for="cancion" class="mb-1 block text-sm text-muted">Tu canción favorita (opcional)</label>
-            <input type="text" id="cancion" name="cancion" placeholder="Artista — Canción"
-                class="w-full rounded-lg border border-accent-light/40 bg-cream px-4 py-3 text-sm outline-none transition focus:border-accent" />
-        </div>
-
         <button type="submit"
             class="btn-accent w-full">
             Confirmar asistencia
@@ -85,7 +79,6 @@ const GAS_URL = import.meta.env.PUBLIC_GAS_URL
                 alergias,
                 otros_texto: fd.get('otros_texto'),
                 bus: fd.get('bus'),
-                cancion: fd.get('cancion'),
             }
 
             const btn = form.querySelector('button[type="submit"]')

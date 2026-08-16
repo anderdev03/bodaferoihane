@@ -26,15 +26,14 @@ Webapp para la boda de Oihane & Fer. Web invitación con secciones.
 | Ubicación | Foto del lugar, nombre, dirección |
 | Itinerario | Mapa estático Tanzania minimalista + línea con puntos (nombre y hora) |
 | Bus | Paradas: Pamplona (10:00), Noáin (10:15) |
-| Música | Embed Spotify (placeholder) + textbox "Tu canción favorita" |
 | Confirmación | Checkbox Sí/No, nombre, alergias (veggie/vegano/celiaco/otros con texto), bus sí/no |
 | Footer | Frase genérica + "Confirma antes del 30 de septiembre" |
-| Panel novios | Protegido: `admin_ander_2026` / `aA9493-ander-03`. Estadísticas: confirmados, alergias, bus, canciones |
+| Panel novios | Protegido: `admin_ander_2026` / `aA9493-ander-03`. Estadísticas: confirmados, alergias, bus |
 
 ## Datos pendientes de los novios
 - [ ] Foto de portada (hero)
 - [ ] Foto del lugar (venue)
-- [ ] Enlace playlist Spotify
+- [ ] Enlace playlist Spotify (pendiente de decidir; sección de música eliminada de momento)
 - [ ] Horarios definitivos del bus
 - [ ] Frase definitiva del footer
 - [ ] Mapa minimalista Tanzania (lo busca el dev)

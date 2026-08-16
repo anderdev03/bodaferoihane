@@ -17,14 +17,8 @@ function doPost(e) {
       data.asiste,
       alergiasStr,
       data.otros_texto || '',
-      data.bus,
-      data.cancion || ''
+      data.bus
     ])
-
-    if (data.cancion && data.cancion.trim()) {
-      const cancionesSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Canciones')
-      cancionesSheet.appendRow([new Date(), data.nombre, data.cancion])
-    }
 
     return ContentService
       .createTextOutput(JSON.stringify({ success: true }))
@@ -58,17 +52,6 @@ function doGet(e) {
       confirmaciones.push(obj)
     }
 
-    const canSheet = spread.getSheetByName('Canciones')
-    const canData = canSheet.getDataRange().getValues()
-    const canHeaders = canData[0] || []
-    const canciones = []
-    for (let i = 1; i < canData.length; i++) {
-      const row = canData[i]
-      const obj = {}
-      canHeaders.forEach((h, idx) => { obj[h] = row[idx] })
-      canciones.push(obj)
-    }
-
     const total = confirmaciones.length
     const asisten = confirmaciones.filter(r => String(r.asiste || '').toUpperCase() === 'SI').length
     const noAsisten = confirmaciones.filter(r => String(r.asiste || '').toUpperCase() === 'NO').length
@@ -88,7 +71,7 @@ function doGet(e) {
     return ContentService
       .createTextOutput(JSON.stringify({
         success: true,
-        data: { confirmaciones, canciones, stats: { total, asisten, noAsisten, bus, alergiasCount } }
+        data: { confirmaciones, stats: { total, asisten, noAsisten, bus, alergiasCount } }
       }))
       .setMimeType(ContentService.MimeType.JSON)
   } catch (error) {
