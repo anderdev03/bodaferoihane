@@ -56,7 +56,8 @@ const busExtra = [
             <div class="space-y-2">
                 {['Vegetariano', 'Vegano', 'Celíaco'].map((opt) => (
                     <label class="flex cursor-pointer items-center gap-2 text-sm">
-                        <input type="checkbox" name="alergias" value={opt} class="accent-accent" />
+                        <input type="checkbox" name="alergias" value={opt}
+                            class="appearance-none size-4 shrink-0 cursor-pointer rounded-full border border-accent-light bg-white transition checked:border-accent checked:bg-accent" />
                         {opt}
                     </label>
                 ))}
@@ -156,7 +157,7 @@ const busExtra = [
             e.preventDefault()
             const fd = new FormData(form)
             const busError = document.getElementById('bus-error')
-            if (!fd.get('bus')) {
+            if (fd.get('asiste') === 'SI' && !fd.get('bus')) {
                 busError.classList.remove('hidden')
                 return
             }
