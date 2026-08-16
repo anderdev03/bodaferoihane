@@ -4,7 +4,7 @@ import Countdown from './Countdown.astro'
 const { title, subtitle, date, targetDate } = Astro.props
 ---
 
-<section class="relative flex min-h-dvh flex-col overflow-hidden px-4 text-center">
+<section class="relative flex hero-full flex-col overflow-hidden px-4 text-center">
     <div class="absolute inset-0">
         <picture>
             <source srcset="/portada.webp" type="image/webp" />
@@ -16,7 +16,7 @@ const { title, subtitle, date, targetDate } = Astro.props
                 fetchpriority="high"
             />
         </picture>
-        <div class="absolute inset-0 bg-gradient-to-b from-cream/80 via-cream/50 to-warm/85"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-cream/80 via-cream/50 to-warm"></div>
     </div>
     <div class="relative z-10 mx-auto flex w-full max-w-2xl flex-1 flex-col justify-between py-12">
         <div data-animate>
@@ -26,7 +26,6 @@ const { title, subtitle, date, targetDate } = Astro.props
             </h1>
         </div>
         <div data-animate>
-            <div class="mx-auto mb-8 h-px w-20 bg-accent"></div>
             <p class="font-serif text-xl italic text-accent sm:text-3xl">{subtitle}</p>
             <p class="mt-4 text-base font-light text-muted sm:text-lg">{date}</p>
             <Countdown targetDate={targetDate} />

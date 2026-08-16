@@ -17,6 +17,11 @@ html {
     scroll-behavior: smooth;
 }
 
+.hero-full {
+    min-height: 100vh;
+    min-height: 100svh;
+}
+
 body {
     @apply bg-cream text-dark font-sans antialiased;
 }
