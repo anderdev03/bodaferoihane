@@ -54,10 +54,11 @@ const GAS_URL = import.meta.env.PUBLIC_GAS_URL
                 <table class="w-full text-left text-sm">
                     <thead>
                         <tr class="border-b border-accent-light/40 text-muted">
+                            <th class="pb-2 pr-4 font-medium">Fecha</th>
                             <th class="pb-2 pr-4 font-medium">Nombre</th>
                             <th class="pb-2 pr-4 font-medium">Asiste</th>
                             <th class="pb-2 pr-4 font-medium">Alergias</th>
-                            <th class="pb-2 pr-4 font-medium">Bus</th>
+                            <th class="pb-2 font-medium">Bus</th>
                         </tr>
                     </thead>
                     <tbody id="invitados-tbody"></tbody>
@@ -91,6 +92,18 @@ const GAS_URL = import.meta.env.PUBLIC_GAS_URL
             document.getElementById('stat-no').textContent = s.noAsisten
             document.getElementById('stat-bus').textContent = s.bus
 
+            function formatDate(value) {
+                if (!value) return ''
+                const d = new Date(value)
+                if (isNaN(d.getTime())) return String(value)
+                const dd = String(d.getDate()).padStart(2, '0')
+                const mm = String(d.getMonth() + 1).padStart(2, '0')
+                const yyyy = d.getFullYear()
+                const hh = String(d.getHours()).padStart(2, '0')
+                const mi = String(d.getMinutes()).padStart(2, '0')
+                return `${dd}/${mm}/${yyyy} ${hh}:${mi}`
+            }
+
             const aList = document.getElementById('alergias-list')
             aList.innerHTML = ''
             Object.entries(s.alergiasCount).forEach(([k, v]) => {
@@ -105,14 +118,16 @@ const GAS_URL = import.meta.env.PUBLIC_GAS_URL
 
             const tbody = document.getElementById('invitados-tbody')
             tbody.innerHTML = ''
-            data.confirmaciones.forEach((r) => {
+            const rows = [...data.confirmaciones].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+            rows.forEach((r) => {
                 const tr = document.createElement('tr')
                 tr.className = 'border-b border-accent-light/20'
                 tr.innerHTML = `
+                    <td class="py-2 pr-4 whitespace-nowrap">${formatDate(r.timestamp)}</td>
                     <td class="py-2 pr-4">${r.nombre || ''}</td>
                     <td class="py-2 pr-4">${r.asiste || ''}</td>
                     <td class="py-2 pr-4">${r.alergias || ''}</td>
-                    <td class="py-2 pr-4">${r.bus || ''}</td>
+                    <td class="py-2">${r.bus || ''}</td>
                 `
                 tbody.appendChild(tr)
             })
