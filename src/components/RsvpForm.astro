@@ -78,7 +78,7 @@ const busExtra = [
                         <div class="space-y-2">
                             {group.options.map((opt) => (
                                 <label class="flex cursor-pointer items-center gap-2 text-sm">
-                                    <input type="checkbox" name="bus" value={opt.value} required class="accent-accent" />
+                                    <input type="checkbox" name="bus" value={opt.value} class="accent-accent" />
                                     {opt.label}
                                 </label>
                             ))}
@@ -94,7 +94,7 @@ const busExtra = [
                             <div class="space-y-2">
                                 {group.options.map((opt) => (
                                     <label class="flex cursor-pointer items-center gap-2 text-sm">
-                                        <input type="checkbox" name="bus" value={opt.value} required class="accent-accent" />
+                                        <input type="checkbox" name="bus" value={opt.value} class="accent-accent" />
                                         {opt.label}
                                     </label>
                                 ))}
@@ -103,6 +103,7 @@ const busExtra = [
                     ))}
                 </div>
             </div>
+            <p id="bus-error" class="mt-2 hidden text-sm text-red-600">Selecciona una opción de autobús</p>
         </div>
 
         <button type="submit"
@@ -132,6 +133,12 @@ const busExtra = [
         form.addEventListener('submit', async (e) => {
             e.preventDefault()
             const fd = new FormData(form)
+            const busError = document.getElementById('bus-error')
+            if (!fd.get('bus')) {
+                busError.classList.remove('hidden')
+                return
+            }
+            busError.classList.add('hidden')
             const alergias = fd.getAll('alergias')
             const payload = {
                 nombre: fd.get('nombre'),
