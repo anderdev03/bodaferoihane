@@ -55,7 +55,22 @@ function doGet(e) {
     const total = confirmaciones.length
     const asisten = confirmaciones.filter(r => String(r.asiste || '').toUpperCase() === 'SI').length
     const noAsisten = confirmaciones.filter(r => String(r.asiste || '').toUpperCase() === 'NO').length
-    const bus = confirmaciones.filter(r => String(r.bus || '').toUpperCase() === 'SI').length
+
+    const busCounts = {}
+    confirmaciones.forEach(r => {
+      const b = String(r.bus || '').trim()
+      if (!b) return
+      busCounts[b] = (busCounts[b] || 0) + 1
+    })
+
+    const idaSolo = confirmaciones.filter(r => String(r.bus || '').toLowerCase().startsWith('ida -')).length
+    const idaVuelta = confirmaciones.filter(r => String(r.bus || '').toLowerCase().startsWith('ida y vuelta')).length
+    const soloVuelta = confirmaciones.filter(r => String(r.bus || '').toLowerCase() === 'solo vuelta').length
+    const noBus = confirmaciones.filter(r => {
+      const b = String(r.bus || '').trim().toLowerCase()
+      return b === '' || b === 'no' || b === 'no cogeré el autobús'
+    }).length
+    const bus = total - noBus
 
     const alergiasCount = {}
     confirmaciones.forEach(r => {
@@ -71,7 +86,7 @@ function doGet(e) {
     return ContentService
       .createTextOutput(JSON.stringify({
         success: true,
-        data: { confirmaciones, stats: { total, asisten, noAsisten, bus, alergiasCount } }
+        data: { confirmaciones, stats: { total, asisten, noAsisten, bus, idaSolo, idaVuelta, soloVuelta, noBus, busCounts, alergiasCount } }
       }))
       .setMimeType(ContentService.MimeType.JSON)
   } catch (error) {

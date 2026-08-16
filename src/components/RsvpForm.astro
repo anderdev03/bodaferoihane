@@ -1,5 +1,32 @@
 ---
 const GAS_URL = import.meta.env.PUBLIC_GAS_URL
+
+const busGroups = [
+    {
+        label: 'Solo ida',
+        options: [
+            { label: 'Salida desde Noáin', value: 'Ida - Salida desde Noáin' },
+            { label: 'Salida desde Burlada', value: 'Ida - Salida desde Burlada' },
+        ],
+    },
+    {
+        label: 'Ida y vuelta',
+        options: [
+            { label: 'Salida desde Noáin', value: 'Ida y vuelta - Salida desde Noáin' },
+            { label: 'Salida desde Burlada', value: 'Ida y vuelta - Salida desde Burlada' },
+        ],
+    },
+]
+
+const busExtra = [
+    {
+        label: 'Otras opciones',
+        options: [
+            { label: 'Solo vuelta', value: 'Solo vuelta' },
+            { label: 'No cogeré el autobús', value: 'No cogeré el autobús' },
+        ],
+    },
+]
 ---
 
 <form id="rsvp-form" class="mx-auto max-w-xl text-left" data-gas={GAS_URL}>
@@ -43,16 +70,38 @@ const GAS_URL = import.meta.env.PUBLIC_GAS_URL
         </div>
 
         <div>
-            <label class="mb-1 block text-sm text-muted">¿Coges el autobús?</label>
-            <div class="flex gap-4">
-                <label class="flex cursor-pointer items-center gap-2 rounded-lg border border-accent-light/40 px-5 py-3 text-sm transition has-checked:border-accent has-checked:bg-accent/5">
-                    <input type="radio" name="bus" value="SI" required />
-                    Sí
-                </label>
-                <label class="flex cursor-pointer items-center gap-2 rounded-lg border border-accent-light/40 px-5 py-3 text-sm transition has-checked:border-accent has-checked:bg-accent/5">
-                    <input type="radio" name="bus" value="NO" required />
-                    No, voy por mi cuenta
-                </label>
+            <label class="mb-4 block text-sm text-muted">¿Coges el autobús?</label>
+            <div class="space-y-4">
+                {busGroups.map((group) => (
+                    <div>
+                        <p class="mb-1.5 text-xs font-medium uppercase tracking-widest text-muted">{group.label}</p>
+                        <div class="space-y-2">
+                            {group.options.map((opt) => (
+                                <label class="flex cursor-pointer items-center gap-2 text-sm">
+                                    <input type="checkbox" name="bus" value={opt.value} required class="accent-accent" />
+                                    {opt.label}
+                                </label>
+                            ))}
+                        </div>
+                    </div>
+                ))}
+            </div>
+            <div class="mt-5 border-t border-accent-light/40 pt-4">
+                <div class="space-y-4">
+                    {busExtra.map((group) => (
+                        <div>
+                            <p class="mb-1.5 text-xs font-medium uppercase tracking-widest text-muted">{group.label}</p>
+                            <div class="space-y-2">
+                                {group.options.map((opt) => (
+                                    <label class="flex cursor-pointer items-center gap-2 text-sm">
+                                        <input type="checkbox" name="bus" value={opt.value} required class="accent-accent" />
+                                        {opt.label}
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
 
@@ -68,6 +117,17 @@ const GAS_URL = import.meta.env.PUBLIC_GAS_URL
         const form = document.getElementById('rsvp-form')
         if (!form) return
         const gasUrl = form.dataset.gas
+
+        const busCheckboxes = form.querySelectorAll('input[name="bus"]')
+        busCheckboxes.forEach((cb) => {
+            cb.addEventListener('change', () => {
+                if (cb.checked) {
+                    busCheckboxes.forEach((o) => {
+                        if (o !== cb) o.checked = false
+                    })
+                }
+            })
+        })
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault()

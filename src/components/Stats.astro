@@ -44,6 +44,29 @@ const GAS_URL = import.meta.env.PUBLIC_GAS_URL
         </div>
 
         <div>
+            <h3 class="font-serif text-xl mb-4">Autobús</h3>
+            <div class="grid gap-4 sm:grid-cols-4">
+                <div class="rounded-lg border border-accent-light/40 bg-white p-5 text-center">
+                    <p id="stat-idasolo" class="font-serif text-3xl text-accent">0</p>
+                    <p class="mt-1 text-xs uppercase tracking-widest text-muted">Solo ida</p>
+                </div>
+                <div class="rounded-lg border border-accent-light/40 bg-white p-5 text-center">
+                    <p id="stat-idavuelta" class="font-serif text-3xl text-accent">0</p>
+                    <p class="mt-1 text-xs uppercase tracking-widest text-muted">Ida y vuelta</p>
+                </div>
+                <div class="rounded-lg border border-accent-light/40 bg-white p-5 text-center">
+                    <p id="stat-solovuelta" class="font-serif text-3xl text-accent">0</p>
+                    <p class="mt-1 text-xs uppercase tracking-widest text-muted">Solo vuelta</p>
+                </div>
+                <div class="rounded-lg border border-accent-light/40 bg-white p-5 text-center">
+                    <p id="stat-nobus" class="font-serif text-3xl text-accent">0</p>
+                    <p class="mt-1 text-xs uppercase tracking-widest text-muted">No cogen bus</p>
+                </div>
+            </div>
+            <div class="mt-4" id="bus-detail-list" class="space-y-2"></div>
+        </div>
+
+        <div>
             <h3 class="font-serif text-xl mb-4">Alergias / Intolerancias</h3>
             <div id="alergias-list" class="space-y-2"></div>
         </div>
@@ -91,6 +114,22 @@ const GAS_URL = import.meta.env.PUBLIC_GAS_URL
             document.getElementById('stat-si').textContent = s.asisten
             document.getElementById('stat-no').textContent = s.noAsisten
             document.getElementById('stat-bus').textContent = s.bus
+            document.getElementById('stat-idasolo').textContent = s.idaSolo || 0
+            document.getElementById('stat-idavuelta').textContent = s.idaVuelta || 0
+            document.getElementById('stat-solovuelta').textContent = s.soloVuelta || 0
+            document.getElementById('stat-nobus').textContent = s.noBus || 0
+
+            const bDetail = document.getElementById('bus-detail-list')
+            bDetail.innerHTML = ''
+            Object.entries(s.busCounts || {}).forEach(([k, v]) => {
+                const d = document.createElement('div')
+                d.className = 'flex justify-between rounded-lg border border-accent-light/40 bg-white px-4 py-3 text-sm'
+                d.innerHTML = `<span>${k}</span><span class="font-medium">${v}</span>`
+                bDetail.appendChild(d)
+            })
+            if (Object.keys(s.busCounts || {}).length === 0) {
+                bDetail.innerHTML = '<p class="text-sm text-muted">Sin datos</p>'
+            }
 
             function formatDate(value) {
                 if (!value) return ''
