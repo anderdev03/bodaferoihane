@@ -78,7 +78,8 @@ const busExtra = [
                         <div class="space-y-2">
                             {group.options.map((opt) => (
                                 <label class="flex cursor-pointer items-center gap-2 text-sm">
-                                    <input type="checkbox" name="bus" value={opt.value} class="accent-accent" />
+                                        <input type="checkbox" name="bus" value={opt.value}
+                                            class="appearance-none size-4 shrink-0 cursor-pointer rounded-full border border-accent-light bg-white transition checked:border-accent checked:bg-accent" />
                                     {opt.label}
                                 </label>
                             ))}
@@ -94,7 +95,8 @@ const busExtra = [
                             <div class="space-y-2">
                                 {group.options.map((opt) => (
                                     <label class="flex cursor-pointer items-center gap-2 text-sm">
-                                        <input type="checkbox" name="bus" value={opt.value} class="accent-accent" />
+                                    <input type="checkbox" name="bus" value={opt.value}
+                                        class="appearance-none size-4 shrink-0 cursor-pointer rounded-full border border-accent-light bg-white transition checked:border-accent checked:bg-accent" />
                                         {opt.label}
                                     </label>
                                 ))}
