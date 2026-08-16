@@ -115,11 +115,31 @@ const busExtra = [
     </div>
 </form>
 
+<div id="rsvp-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-dark/50 p-4 backdrop-blur-sm">
+    <div class="w-full max-w-md rounded-xl bg-white p-8 text-center shadow-xl">
+        <p class="font-serif text-2xl text-accent">¡Gracias por confirmar!</p>
+        <p class="mt-2 text-sm text-muted">Te esperamos ❤️</p>
+        <button id="rsvp-modal-close" class="btn-accent mt-6 w-full">Cerrar</button>
+    </div>
+</div>
+
 <script>
     (function () {
         const form = document.getElementById('rsvp-form')
         if (!form) return
         const gasUrl = form.dataset.gas
+        const modal = document.getElementById('rsvp-modal')
+
+        function closeModal() {
+            modal.classList.add('hidden')
+            modal.classList.remove('flex')
+            form.reset()
+            window.location.reload()
+        }
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal()
+        })
+        document.getElementById('rsvp-modal-close').addEventListener('click', closeModal)
 
         const busCheckboxes = form.querySelectorAll('input[name="bus"]')
         busCheckboxes.forEach((cb) => {
@@ -161,8 +181,8 @@ const busExtra = [
                     headers: { 'Content-Type': 'text/plain' },
                     body: JSON.stringify(payload),
                 })
-                form.innerHTML =
-                    '<div class="text-center py-12"><p class="font-serif text-2xl text-accent">¡Gracias por confirmar!</p><p class="mt-2 text-sm text-muted">Te esperamos ❤️</p></div>'
+                modal.classList.remove('hidden')
+                modal.classList.add('flex')
             } catch {
                 btn.disabled = false
                 btn.textContent = 'Error — inténtalo de nuevo'
