@@ -89,7 +89,8 @@ const GAS_URL = import.meta.env.PUBLIC_GAS_URL
             </div>
         </div>
 
-        <button id="logout-btn" class="text-sm text-muted underline hover:text-dark">Cerrar sesión</button>
+            <button id="logout-btn" class="text-sm text-muted underline hover:text-dark">Cerrar sesión</button>
+            <button id="refresh-btn" class="ml-4 text-sm text-muted underline hover:text-dark">Actualizar</button>
     </div>
 </div>
 
@@ -172,6 +173,14 @@ const GAS_URL = import.meta.env.PUBLIC_GAS_URL
             })
         }
 
+        async function loadData() {
+            try {
+                const res = await fetch(`${gasUrl}?token=${encodeURIComponent(ADMIN_PASS)}`)
+                const json = await res.json()
+                if (json.success) showDashboard(json.data)
+            } catch {}
+        }
+
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault()
             const pass = passInput.value
@@ -181,7 +190,6 @@ const GAS_URL = import.meta.env.PUBLIC_GAS_URL
                 return
             }
             errorEl.classList.add('hidden')
-
             try {
                 const res = await fetch(`${gasUrl}?token=${encodeURIComponent(ADMIN_PASS)}`)
                 const json = await res.json()
@@ -198,6 +206,7 @@ const GAS_URL = import.meta.env.PUBLIC_GAS_URL
             }
         })
 
+        document.getElementById('refresh-btn').addEventListener('click', loadData)
         document.getElementById('logout-btn').addEventListener('click', () => {
             sessionStorage.removeItem('admin_auth')
             loginEl.classList.remove('hidden')
@@ -205,11 +214,6 @@ const GAS_URL = import.meta.env.PUBLIC_GAS_URL
             passInput.value = ''
         })
 
-        if (sessionStorage.getItem('admin_auth')) {
-            fetch(`${gasUrl}?token=${encodeURIComponent(ADMIN_PASS)}`)
-                .then((r) => r.json())
-                .then((j) => { if (j.success) showDashboard(j.data) })
-                .catch(() => {})
-        }
+        if (sessionStorage.getItem('admin_auth')) loadData()
     })()
 </script>
