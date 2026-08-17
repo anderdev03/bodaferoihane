@@ -116,20 +116,23 @@ const busExtra = [
     </div>
 </form>
 
-<div id="rsvp-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-dark/50 p-4 backdrop-blur-sm">
-    <div class="w-full max-w-md rounded-xl bg-white p-8 text-center shadow-xl">
-        <p class="font-serif text-2xl text-accent">¡Gracias por confirmar!</p>
-        <p class="mt-2 text-sm text-muted">Te esperamos ❤️</p>
-        <button id="rsvp-modal-close" class="btn-accent mt-6 w-full">Cerrar</button>
-    </div>
-</div>
-
 <script>
     (function () {
         const form = document.getElementById('rsvp-form')
         if (!form) return
         const gasUrl = form.dataset.gas
-        const modal = document.getElementById('rsvp-modal')
+
+        const modal = document.createElement('div')
+        modal.id = 'rsvp-modal'
+        modal.className = 'fixed inset-0 z-50 hidden items-center justify-center bg-dark/50 p-4 backdrop-blur-sm'
+        modal.innerHTML = `
+            <div class="w-full max-w-md rounded-xl bg-white p-8 text-center shadow-xl">
+                <p class="font-serif text-2xl text-accent">¡Gracias por confirmar!</p>
+                <p class="mt-2 text-sm text-muted">Te esperamos ❤️</p>
+                <button class="btn-accent mt-6 w-full">Cerrar</button>
+            </div>
+        `
+        document.body.appendChild(modal)
 
         function closeModal() {
             modal.classList.add('hidden')
@@ -140,7 +143,7 @@ const busExtra = [
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closeModal()
         })
-        document.getElementById('rsvp-modal-close').addEventListener('click', closeModal)
+        modal.querySelector('button').addEventListener('click', closeModal)
 
         const busCheckboxes = form.querySelectorAll('input[name="bus"]')
         busCheckboxes.forEach((cb) => {
