@@ -51,6 +51,7 @@ const busExtra = [
                 class="w-full rounded-lg border border-accent-light/40 bg-cream px-4 py-3 text-sm outline-none transition focus:border-accent" />
         </div>
 
+        <div id="extras-section">
         <div>
             <label class="mb-1 block text-sm text-muted">Alergias / Intolerancias</label>
             <div class="space-y-2">
@@ -108,6 +109,7 @@ const busExtra = [
             </div>
             <p id="bus-error" class="mt-2 hidden text-sm text-red-600">Selecciona una opción de autobús</p>
         </div>
+        </div>
 
         <button type="submit"
             class="btn-accent w-full">
@@ -145,6 +147,14 @@ const busExtra = [
         })
         modal.querySelector('button').addEventListener('click', closeModal)
 
+        const extrasSection = document.getElementById('extras-section')
+        const asisteRadios = form.querySelectorAll('input[name="asiste"]')
+        function toggleExtras() {
+            const selected = form.querySelector('input[name="asiste"]:checked')
+            extrasSection.style.display = (selected && selected.value === 'NO') ? 'none' : ''
+        }
+        asisteRadios.forEach(r => r.addEventListener('change', toggleExtras))
+        toggleExtras()
         const busCheckboxes = form.querySelectorAll('input[name="bus"]')
         busCheckboxes.forEach((cb) => {
             cb.addEventListener('change', () => {
