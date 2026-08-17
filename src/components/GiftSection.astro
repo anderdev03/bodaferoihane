@@ -2,23 +2,23 @@
 const IBAN = 'ES69 3008 0084 3145 0192 0526'
 ---
 
-<section class="bg-warm px-4 py-10 sm:py-14">
-    <div class="mx-auto max-w-xl rounded-2xl bg-[#605550] px-8 py-10 text-center" data-animate>
-        <p class="font-serif text-sm uppercase tracking-[0.3em] text-[#f5f0e8]">Regalo</p>
-        <p class="mt-6 text-sm leading-relaxed text-[#f5f0e8]">
+<section class="px-4 py-10 sm:py-14">
+    <div class="mx-auto max-w-xl rounded-2xl bg-accent px-8 py-10 text-center" data-animate>
+        <p class="font-serif text-sm uppercase tracking-[0.3em] text-white">Regalo</p>
+        <p class="mt-6 text-sm leading-relaxed text-white/90">
             Lo que de verdad nos importa es que pasemos un gran día junt@s.
             Si además queréis echarnos una mano...
         </p>
-        <div class="mt-6 inline-flex items-center gap-3 rounded-lg border border-[#f5f0e8]/20 bg-[#f5f0e8]/10 px-5 py-3">
-            <span class="font-mono text-sm tracking-wide text-[#f5f0e8]" id="iban-text">{IBAN}</span>
-            <button id="copy-iban" class="text-[#f5f0e8]/60 transition hover:text-[#f5f0e8]" title="Copiar número de cuenta">
+        <div class="mt-6 inline-flex items-center gap-3 rounded-lg border border-white/20 bg-white/10 px-5 py-3">
+            <span class="whitespace-nowrap font-mono text-xs tracking-wide text-white sm:text-sm" id="iban-text">{IBAN}</span>
+            <button id="copy-iban" class="text-white/60 transition hover:text-white" title="Copiar número de cuenta">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                 </svg>
             </button>
         </div>
-        <p id="copy-msg" class="mt-2 hidden text-xs text-[#f5f0e8]">¡Copiado!</p>
+        <p id="copy-msg" class="mt-2 hidden text-xs text-white">¡Copiado!</p>
     </div>
 </section>
 
